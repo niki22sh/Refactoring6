@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: ../../Downloads/Refactoring6/project
+      dockerfile: Dockerfile
+    container_name: employee-app
+    environment:
+      - NODE_ENV=production
+      - APP_PORT=3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: mongo:7
+    container_name: employee-db
+    environment:
+      - MONGO_INITDB_DATABASE=employeedb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: unless-stopped
+
+  tests:
+    build:
+      context: ../../Downloads/Refactoring6/project
+      dockerfile: Dockerfile.test
+    container_name: employee-tests
+    environment:
+      - NODE_ENV=test
+    depends_on:
+      - db
+    profiles:
+      - test
+
+volumes:
+  mongo_data:
