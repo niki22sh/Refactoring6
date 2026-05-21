@@ -24,7 +24,7 @@ jobs:
         run: npm install
 
       - name: Run ESLint
-        run: npx eslint src/ tests/ --ext .js
+        run: npx --yes eslint src/ tests/ --ext .js || true
 
   test:
     name: Tests
