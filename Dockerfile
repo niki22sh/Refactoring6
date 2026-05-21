@@ -6,6 +6,6 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY ../../Downloads/Refactoring6/project .
+COPY . .
 
 CMD ["node", "src/app.js"]
